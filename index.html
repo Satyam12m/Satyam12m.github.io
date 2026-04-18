@@ -618,6 +618,10 @@ body::before {
     <div class="q-progress">
       <div class="q-progress-bar"><div class="q-progress-fill" id="studyProgressFill"></div></div>
       <span class="q-count" id="studyQCount"></span>
+      <span style="margin-left: 12px; display: flex; gap: 10px; font-family: 'DM Mono', monospace; font-size: .85rem; font-weight: 500; background: var(--surface2); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border);">
+        <span style="color: var(--accent);">✓ <span id="studyCorrectCount">0</span></span>
+        <span style="color: var(--warn);">✗ <span id="studyWrongCount">0</span></span>
+      </span>
     </div>
     <div id="studyQCard"></div>
     <div class="q-nav">
@@ -849,7 +853,7 @@ const RAW = [
   {w:7,q:'"the price of a good that prevails in the world market for that good" is the definition of',opts:["export price","import price","world price","domestic price"],ans:2},
   {w:7,q:"The area between the demand curve and the price is an indicator of",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:0},
   // Week 8
-  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC − MB"],ans:0},
+  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC − MB"],ans:3},
   {w:8,q:'"The direct benefit to consumers of consuming an additional unit of a good by the consumer" is',opts:["private marginal cost (PMC)","social marginal cost (SMC)","private marginal benefit (PMB)","social marginal benefit (SMB)"],ans:2},
   {w:8,q:"Partying with loud noise is an example of",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
   {w:8,q:"When an individual's consumption reduces the well-being of others who are not compensated, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
@@ -1070,11 +1074,24 @@ function startStudy() {
   
   currentIdx = 0;
   clearTimers();
+  updateStudyScore(); // Reset score immediately
   document.getElementById('studyQCard').innerHTML = ''; // reset container
   startTimer(10*60, 'studyTimer', ()=>alert('Time up! Session ended.'));
   startElapsed('studyElapsed');
   renderStudyQ();
   goTo('study-screen');
+}
+
+function updateStudyScore() {
+  let c = 0, w = 0;
+  for(let i=0; i<questions.length; i++) {
+    if(studyAnswered[i]) {
+      if(userAnswers[i] === questions[i].ans) c++;
+      else w++;
+    }
+  }
+  document.getElementById('studyCorrectCount').innerText = c;
+  document.getElementById('studyWrongCount').innerText = w;
 }
 
 function buildStudyQHTML(idx) {
@@ -1144,6 +1161,7 @@ function studyAnswer(idx, optIdx) {
   if(studyAnswered[idx]) return;
   userAnswers[idx] = optIdx;
   studyAnswered[idx] = true;
+  updateStudyScore();
   
   if (studyScrollMode) {
       // Re-render ONLY the specific question's options and feedback
