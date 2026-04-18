@@ -549,7 +549,7 @@ body::before {
 <section class="screen active" id="home">
   <div class="home-glow"></div>
   <div class="home-title">Conservation<br><span>Economics</span></div>
-  <div class="home-sub">NPTEL · 12 Weeks · 120 Questions</div>
+  <div class="home-sub">NPTEL · Weeks 0-12 · 130 Questions</div>
   <div class="mode-grid">
     <div class="mode-card" style="--card-accent:#3fb950" onclick="goTo('learn-screen')">
       <span class="icon">📖</span>
@@ -775,6 +775,17 @@ body::before {
 //  DATA
 // ═══════════════════════════════════════════════
 const RAW = [
+  // Week 0
+  {w:0,q:"Which of these is true?",opts:["Wants are unlimited, resources are unlimited","Wants are limited, resources are limited","Wants are unlimited, resources are limited","Wants are limited, resources are unlimited"],ans:2},
+  {w:0,q:"The property of society getting the most it can from its scarce resources is a definition of",opts:["efficiency","equality","prudence","sustainability"],ans:0},
+  {w:0,q:'"something that induces a person to act" is a definition of',opts:["enticement","attraction","incentive","occupation"],ans:2},
+  {w:0,q:"Input costs that require an outlay of money are",opts:["explicit costs","implicit costs","opportunity costs","phantom costs"],ans:0},
+  {w:0,q:'"the ability of an individual to own and exercise control over scarce resources" is known as',opts:["property rights","resource rights","individual rights","social rights"],ans:0},
+  {w:0,q:"Whatever must be given up to obtain some item is a definition of",opts:["explicit costs","implicit costs","opportunity costs","phantom costs"],ans:2},
+  {w:0,q:"Most of rational thinking occurs",opts:["before the margin","at the margin","after the margin","none of these"],ans:1},
+  {w:0,q:"Rational decision making compares",opts:["average benefits to average costs","average benefits to marginal costs","marginal benefits to average costs","marginal benefits to marginal costs"],ans:3},
+  {w:0,q:'"an economy that allocates resources through the decentralised decisions of many firms and households as they interact in markets for goods and services" is a / an',opts:["urban economy","rural economy","planned economy","market economy"],ans:3},
+  {w:0,q:'"the ability to produce a good at a lower opportunity cost than another producer" is a definition of',opts:["real advantage","monetary advantage","comparative advantage","opportunity advantage"],ans:2},
   // Week 1
   {w:1,q:"In the word root for conservation, servare stands for",opts:["together","to keep","house","manage"],ans:1},
   {w:1,q:"Phillips curve shows the relation between",opts:["profit and loss","marked price and selling price","inflation rate and unemployment rate","electricity consumption and heat output"],ans:2},
@@ -853,7 +864,7 @@ const RAW = [
   {w:7,q:'"the price of a good that prevails in the world market for that good" is the definition of',opts:["export price","import price","world price","domestic price"],ans:2},
   {w:7,q:"The area between the demand curve and the price is an indicator of",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:0},
   // Week 8
-  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC / MB"],ans:0},
+  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC − MB"],ans:3},
   {w:8,q:'"The direct benefit to consumers of consuming an additional unit of a good by the consumer" is',opts:["private marginal cost (PMC)","social marginal cost (SMC)","private marginal benefit (PMB)","social marginal benefit (SMB)"],ans:2},
   {w:8,q:"Partying with loud noise is an example of",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
   {w:8,q:"When an individual's consumption reduces the well-being of others who are not compensated, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
