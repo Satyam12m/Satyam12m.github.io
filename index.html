@@ -927,6 +927,9 @@ let quizScrollMode = false, studyScrollMode = false;
 let optionMaps = []; 
 let studyAnswered = []; 
 
+// ── Exam Option Maps ──
+let examOptionMaps = [];
+
 // ── Review states ──
 let studyReview = [];
 let quizReview = [];
@@ -1375,12 +1378,20 @@ function showReview() {
 // ═══════════════════════════════════════════════
 function startExam() {
   const mins = parseInt(document.getElementById('examTimerInput').value) || 60;
+  
+  // 1. Shuffle Questions
   const pool = shuffle(RAW);
   const secA = pool.slice(0,25);
   const secB = pool.slice(25,50);
   examQuestions = [...secA, ...secB]; 
   examAnswers = new Array(50).fill(null);
   examReview = new Array(50).fill(false);
+  
+  // 2. Shuffle Options for Exam
+  examOptionMaps = examQuestions.map(q => {
+    const indices = [0,1,2,3];
+    return shuffle(indices);
+  });
   
   clearTimers();
   startTimer(mins*60, 'examTimer', ()=>{ alert('Time\'s up! Submitting exam.'); submitExam(true); });
@@ -1419,8 +1430,16 @@ function renderExamScreen() {
 function buildExamQ(q, gi) {
   const div = document.createElement('div');
   const isReviewed = examReview[gi];
+  const map = examOptionMaps[gi];
+  
   div.className = `q-card ${isReviewed ? 'review-marked' : ''}`;
   div.id = 'examQ_'+gi;
+  
+  const optHtml = map.map((origIdx, newPos) => {
+      const selected = examAnswers[gi] === newPos;
+      return `<button class="option-btn${selected?' reveal-correct':''}" onclick="examAnswer(${gi},${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
+  }).join('');
+  
   div.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <div class="q-week-tag" style="margin:0;">Q${gi+1} · Week ${q.w}</div>
@@ -1430,7 +1449,7 @@ function buildExamQ(q, gi) {
     </div>
     <div class="q-text">${q.q}</div>
     <div class="options-list">
-      ${q.opts.map((o,oi)=>`<button class="option-btn${examAnswers[gi]===oi?' reveal-correct':''}" onclick="examAnswer(${gi},${oi})">${'<span class="opt-letter">'+LETTERS[oi]+'</span>'}${o}</button>`).join('')}
+      ${optHtml}
     </div>`;
   return div;
 }
@@ -1444,11 +1463,16 @@ function toggleExamReview(gi) {
   }
 }
 
-function examAnswer(gi, oi) {
-  examAnswers[gi] = oi;
+function examAnswer(gi, newPos) {
+  examAnswers[gi] = newPos;
   const q = examQuestions[gi];
+  const map = examOptionMaps[gi];
   const card = document.getElementById('examQ_'+gi);
-  card.querySelector('.options-list').innerHTML = q.opts.map((o,oi2)=>`<button class="option-btn${examAnswers[gi]===oi2?' reveal-correct':''}" onclick="examAnswer(${gi},${oi2})">${'<span class="opt-letter">'+LETTERS[oi2]+'</span>'}${o}</button>`).join('');
+  
+  card.querySelector('.options-list').innerHTML = map.map((origIdx, nPos) => {
+      const selected = examAnswers[gi] === nPos;
+      return `<button class="option-btn${selected?' reveal-correct':''}" onclick="examAnswer(${gi},${nPos})"><span class="opt-letter">${LETTERS[nPos]}</span>${q.opts[origIdx]}</button>`;
+  }).join('');
 }
 
 function submitExam(auto = false) {
@@ -1462,13 +1486,18 @@ function submitExam(auto = false) {
   }
   clearTimers();
   let secA=0, secB=0;
+  
   examQuestions.forEach((q,i) => {
     const ua = examAnswers[i];
-    if(ua === q.ans) {
-      if(i < 25) secA++;
-      else secB++;
+    if (ua !== null) {
+        const origIdx = examOptionMaps[i][ua];
+        if(origIdx === q.ans) {
+          if(i < 25) secA++;
+          else secB++;
+        }
     }
   });
+  
   const total = secA*1 + secB*2;
   document.getElementById('examResultScore').textContent = total;
   document.getElementById('eSecA').textContent = secA+'/25';
@@ -1483,17 +1512,22 @@ function showExamReview() {
   list.innerHTML = '<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;margin-bottom:16px">Answer Review</div>';
   examQuestions.forEach((q,i) => {
     const ua = examAnswers[i];
-    const isCorrect = ua === q.ans;
+    const map = examOptionMaps[i];
+    const origAns = ua !== null ? map[ua] : null;
+    const isCorrect = origAns === q.ans;
     const marks = i < 25 ? '1 Mark' : '2 Marks';
+    
     const item = document.createElement('div');
     item.className = 'review-item ' + (ua===null ? '' : isCorrect ? 'correct-item' : 'wrong-item');
-    const optsHtml = q.opts.map((o,oi) => {
+    
+    const optsHtml = map.map((origIdx, newPos) => {
       let cls = '';
-      if(oi===q.ans) cls='is-correct';
-      else if(ua===oi && oi!==q.ans) cls='is-wrong';
-      const marker = oi===q.ans?'✓':(ua===oi?'✗':'');
-      return `<div class="review-opt ${cls}">${LETTERS[oi]}. ${o} ${marker}</div>`;
+      if(origIdx === q.ans) cls='is-correct';
+      else if(ua === newPos && origIdx !== q.ans) cls='is-wrong';
+      const marker = origIdx===q.ans?'✓':(ua===newPos?'✗':'');
+      return `<div class="review-opt ${cls}">${LETTERS[newPos]}. ${q.opts[origIdx]} ${marker}</div>`;
     }).join('');
+    
     item.innerHTML = `<div style="font-size:.7rem;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace">Q${i+1} · Week ${q.w} · ${marks}</div><div class="review-q">${q.q}</div><div class="review-opts">${optsHtml}</div>`;
     list.appendChild(item);
   });
