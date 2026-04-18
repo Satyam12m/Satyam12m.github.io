@@ -76,7 +76,6 @@ body::before {
 .home-title span { color: var(--accent); }
 
 .home-sub {
-  font-size: 1rem;
   color: var(--muted);
   margin-bottom: 48px;
   letter-spacing: 2px;
@@ -210,14 +209,42 @@ body::before {
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 
+.q-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
 .q-week-tag {
   font-size: .72rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--accent2);
-  margin-bottom: 12px;
   font-family: 'DM Mono', monospace;
 }
+
+.review-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: .75rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.review-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+.review-btn.active {
+  background: rgba(240, 136, 62, 0.15);
+  border-color: var(--accent3);
+  color: var(--accent3);
+  font-weight: 600;
+}
+
 .q-text {
   font-family: 'Playfair Display', serif;
   font-size: 1.15rem;
@@ -319,11 +346,7 @@ body::before {
 .form-group { margin-bottom: 20px; }
 .form-label { display:block; font-size:.85rem; font-weight:500; margin-bottom:8px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 
-.week-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+.week-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .week-chip {
   padding: 6px 14px;
   border-radius: 20px;
@@ -339,12 +362,7 @@ body::before {
 .week-chip.selected { background: var(--accent); border-color: var(--accent); color:#000; font-weight:600; }
 .week-chip:hover:not(.selected) { border-color: var(--accent); color: var(--accent); }
 
-.toggle-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+.toggle-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .toggle {
   width: 44px; height: 24px;
   background: var(--border);
@@ -365,12 +383,7 @@ body::before {
 }
 .toggle.on::after { left:23px; }
 
-.timer-input-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
+.timer-input-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .num-input {
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -384,26 +397,39 @@ body::before {
 }
 .num-input:focus { outline:none; border-color:var(--accent); }
 
+/* ══════════════ MODALS ══════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  width: 90%; max-width: 420px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: fadeUp .2s ease;
+}
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 16px; }
+.modal-stats {
+  margin-bottom: 24px; line-height: 1.6;
+  background: var(--surface2);
+  padding: 16px; border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.modal-stats-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.modal-stats-row:last-child { margin-bottom: 0; }
+
 /* ══════════════ RESULTS ══════════════ */
-.result-hero {
-  text-align: center;
-  padding: 48px 20px 32px;
-}
-.result-score {
-  font-family: 'Playfair Display', serif;
-  font-size: 5rem;
-  font-weight: 900;
-  color: var(--accent);
-  line-height: 1;
-}
+.result-hero { text-align: center; padding: 48px 20px 32px; }
+.result-score { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--accent); line-height: 1; }
 .result-label { color: var(--muted); font-size: .9rem; margin-top: 4px; }
-.result-stats {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  margin: 24px 0;
-  flex-wrap: wrap;
-}
+.result-stats { display: flex; justify-content: center; gap: 32px; margin: 24px 0; flex-wrap: wrap; }
 .result-stat { text-align:center; }
 .result-stat .val { font-family:'DM Mono',monospace; font-size:1.4rem; font-weight:500; }
 .result-stat .lbl { font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
@@ -418,121 +444,75 @@ body::before {
 }
 .review-item.correct-item { border-left: 3px solid var(--accent); }
 .review-item.wrong-item { border-left: 3px solid var(--warn); }
+.review-item.review-flagged { border-right: 3px solid var(--accent3); }
 .review-q { font-family:'Playfair Display',serif; font-size:1rem; margin-bottom:12px; line-height:1.5; }
 .review-opts { display:flex; flex-direction:column; gap:6px; }
-.review-opt {
-  font-size: .85rem;
-  padding: 6px 10px;
-  border-radius: 6px;
-  color: var(--muted);
-}
+.review-opt { font-size: .85rem; padding: 6px 10px; border-radius: 6px; color: var(--muted); }
 .review-opt.is-correct { color: var(--accent); background: rgba(63,185,80,.08); }
 .review-opt.is-wrong { color: var(--warn); background: rgba(248,81,73,.08); }
 
 /* ══════════════ LEARNING MODE ══════════════ */
-.learn-week-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 28px;
-}
+.learn-week-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .learn-tab {
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  cursor: pointer;
-  font-size: .82rem;
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  transition: all .2s;
+  padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface2); cursor: pointer; font-size: .82rem;
+  font-family: 'DM Mono', monospace; color: var(--muted); transition: all .2s;
 }
 .learn-tab:hover { border-color: var(--accent2); color: var(--accent2); }
 .learn-tab.active { background: var(--accent2); border-color:var(--accent2); color:#000; font-weight:600; }
 
-.learn-q-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-  margin-bottom: 14px;
-}
+.learn-q-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 14px; }
 .learn-q-text { font-family:'Playfair Display',serif; font-size:1rem; line-height:1.6; margin-bottom:14px; }
 .learn-opts { display:flex; flex-direction:column; gap:6px; }
-.learn-opt {
-  font-size:.88rem; padding:8px 12px; border-radius:7px;
-  color:var(--muted); border: 1px solid transparent;
-}
+.learn-opt { font-size:.88rem; padding:8px 12px; border-radius:7px; color:var(--muted); border: 1px solid transparent; }
 .learn-opt.correct-opt { background:rgba(63,185,80,.1); border-color:var(--accent); color:var(--accent); font-weight:500; }
 
 /* ══════════════ EXAM MODE ══════════════ */
 .exam-section-header {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px;
 }
 .exam-section-badge {
-  background: var(--accent3);
-  color:#000;
-  font-weight:700;
-  padding: 4px 12px;
-  border-radius:20px;
-  font-size:.8rem;
-  font-family:'DM Mono',monospace;
+  background: var(--accent3); color:#000; font-weight:700;
+  padding: 4px 12px; border-radius:20px; font-size:.8rem; font-family:'DM Mono',monospace;
 }
 .exam-marks-badge {
-  background: var(--surface2);
-  border:1px solid var(--border);
-  color:var(--muted);
-  padding:3px 10px;
-  border-radius:20px;
-  font-size:.78rem;
-  font-family:'DM Mono',monospace;
+  background: var(--surface2); border:1px solid var(--border); color:var(--muted);
+  padding:3px 10px; border-radius:20px; font-size:.78rem; font-family:'DM Mono',monospace;
 }
 
 /* ══════════════ STUDY MODE ANSWER ══════════════ */
 .study-answer-banner {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  background: rgba(63,185,80,.08);
-  border: 1px solid var(--accent);
-  font-size: .9rem;
-  color: var(--accent);
+  margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+  background: rgba(63,185,80,.08); border: 1px solid var(--accent);
+  font-size: .9rem; color: var(--accent);
 }
 
-/* ══════════════ SCROLLBAR ══════════════ */
+/* ══════════════ UTILITY ══════════════ */
 ::-webkit-scrollbar { width:6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius:3px; }
-
-/* ══════════════ UTILITY ══════════════ */
 .separator { height:1px; background:var(--border); margin:24px 0; }
 .text-muted { color: var(--muted); }
-.mt-8 { margin-top:8px; }
-.mt-16 { margin-top:16px; }
-.flex-row { display:flex; gap:10px; align-items:center; }
-
-/* ══════════════ ELAPSED ══════════════ */
 .elapsed-pill {
-  font-family:'DM Mono',monospace;
-  font-size:.8rem;
-  color:var(--muted);
-  background:var(--surface2);
-  border:1px solid var(--border);
-  padding:4px 12px;
-  border-radius:20px;
+  font-family:'DM Mono',monospace; font-size:.8rem; color:var(--muted);
+  background:var(--surface2); border:1px solid var(--border); padding:4px 12px; border-radius:20px;
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════ HOME ══════════ -->
+<div id="submitModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">Ready to submit?</div>
+    <div class="modal-stats" id="submitModalStats"></div>
+    <div style="display:flex; justify-content:flex-end; gap:12px;">
+      <button class="btn btn-secondary" onclick="closeSubmitModal()">Continue Reviewing</button>
+      <button class="btn btn-danger" id="confirmSubmitBtn">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
 <section class="screen active" id="home">
   <div class="home-glow"></div>
   <div class="home-title">Conservation<br><span>Economics</span></div>
@@ -561,7 +541,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ LEARNING SCREEN ══════════ -->
 <section class="screen" id="learn-screen">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -573,7 +552,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ STUDY SETUP ══════════ -->
 <section class="screen" id="study-setup">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -590,7 +568,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ STUDY SCREEN ══════════ -->
 <section class="screen" id="study-screen">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -611,7 +588,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ QUIZ SETUP ══════════ -->
 <section class="screen" id="quiz-setup">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -633,6 +609,10 @@ body::before {
         <div class="toggle" id="shuffleOptToggle" onclick="toggleOpt('shuffleOptToggle','shuffleOpt')"></div>
         <span>Shuffle Options</span>
       </div>
+      <div class="toggle-row">
+        <div class="toggle" id="scrollModeToggle" onclick="toggleOpt('scrollModeToggle','scrollMode')"></div>
+        <span>Scroll Mode <span class="text-muted">(Show all questions in a list)</span></span>
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label">Timer (minutes)</label>
@@ -645,7 +625,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ QUIZ SCREEN ══════════ -->
 <section class="screen" id="quiz-screen">
   <div class="topbar">
     <button class="btn-back" onclick="confirmQuit('quiz')">← Quit</button>
@@ -654,20 +633,19 @@ body::before {
     <span class="timer-pill" id="quizTimer">10:00</span>
   </div>
   <div class="content">
-    <div class="q-progress">
+    <div class="q-progress" id="quizProgressWrap">
       <div class="q-progress-bar"><div class="q-progress-fill" id="quizProgressFill"></div></div>
       <span class="q-count" id="quizQCount"></span>
     </div>
     <div id="quizQCard"></div>
-    <div class="q-nav">
-      <button class="btn btn-secondary" onclick="quizNav(-1)">← Prev</button>
+    <div class="q-nav" id="quizNavWrap">
+      <button class="btn btn-secondary" onclick="quizNav(-1)" id="quizPrevBtn">← Prev</button>
       <button class="btn btn-primary" onclick="quizNav(1)" id="quizNextBtn">Next →</button>
-      <button class="btn btn-danger" onclick="submitQuiz()">Submit</button>
+      <button class="btn btn-danger" onclick="promptSubmitQuiz()">Submit</button>
     </div>
   </div>
 </section>
 
-<!-- ══════════ QUIZ RESULTS ══════════ -->
 <section class="screen" id="quiz-results">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -693,7 +671,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ EXAM SETUP ══════════ -->
 <section class="screen" id="exam-setup">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -713,7 +690,6 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ EXAM SCREEN ══════════ -->
 <section class="screen" id="exam-screen">
   <div class="topbar">
     <button class="btn-back" onclick="confirmQuit('exam')">← Quit</button>
@@ -723,11 +699,10 @@ body::before {
   </div>
   <div class="content" id="examContent"></div>
   <div style="position:sticky;bottom:0;background:var(--bg);padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;z-index:10">
-    <button class="btn btn-danger" onclick="submitExam()">Submit Exam</button>
+    <button class="btn btn-danger" onclick="promptSubmitExam()">Submit Exam</button>
   </div>
 </section>
 
-<!-- ══════════ EXAM RESULTS ══════════ -->
 <section class="screen" id="exam-results">
   <div class="topbar">
     <button class="btn-back" onclick="goHome()">← Home</button>
@@ -824,498 +799,4 @@ const RAW = [
   {w:6,q:'"a legal minimum on the price at which a good can be sold" is',opts:["price ceiling","price floor","selling ceiling","selling floor"],ans:1},
   {w:6,q:'"a table that shows the relationship between the price of a good and the quantity demanded" is',opts:["demand table","demand schedule","supply table","supply schedule"],ans:1},
   // Week 7
-  {w:7,q:"Laffer's curve is the relationship between",opts:["inflation and unemployment","tax size and tax revenue","producer surplus and consumer surplus","tax size and deadweight loss"],ans:1},
-  {w:7,q:'"the amount a buyer is willing to pay for a good minus the amount the buyer actually pays for it" is',opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:0},
-  {w:7,q:'"the fall in total surplus that results from a market distortion, such as a tax" is',opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:3},
-  {w:7,q:'"the amount a seller is paid for a good minus the seller\'s cost of providing it" is',opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:1},
-  {w:7,q:'"the maximum amount that a buyer will pay for a good" is',opts:["willingness to pay","market demand","demand curve","buyer's surplus"],ans:0},
-  {w:7,q:"Imposition of tariff",opts:["increases producer surplus and government revenue","increases consumer surplus and government revenue","increases producer surplus, consumer surplus and government revenue","increases total surplus"],ans:0},
-  {w:7,q:"The area between the supply curve and the price is an indicator of",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:1},
-  {w:7,q:"Value to buyers - Cost to sellers is",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:2},
-  {w:7,q:'"the price of a good that prevails in the world market for that good" is the definition of',opts:["export price","import price","world price","domestic price"],ans:2},
-  {w:7,q:"The area between the demand curve and the price is an indicator of",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:0},
-  // Week 8
-  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC / MD"],ans:2},
-  {w:8,q:'"The direct benefit to consumers of consuming an additional unit of a good by the consumer" is',opts:["private marginal cost (PMC)","social marginal cost (SMC)","private marginal benefit (PMB)","social marginal benefit (SMB)"],ans:2},
-  {w:8,q:"Partying with loud noise is an example of",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
-  {w:8,q:"When an individual's consumption reduces the well-being of others who are not compensated, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
-  {w:8,q:"When a firm's production reduces the well-being of others who are not compensated by the firm, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:0},
-  {w:8,q:"Vaccination is an example of",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:3},
-  {w:8,q:"When a firm's production increases the well-being of others but the firm is not compensated, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:1},
-  {w:8,q:"For a positive consumption externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC / MD"],ans:2},
-  {w:8,q:"For a negative consumption externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC / MD"],ans:1},
-  {w:8,q:"For a negative production externality,",opts:["SMC = PMC + MD","SMC = PMC - MD","SMC = PMC","SMC = PMC - MB"],ans:0},
-  // Week 9
-  {w:9,q:'"the increase in total cost that arises from an extra unit of production" are',opts:["fixed costs","variable costs","marginal costs","sunk costs"],ans:2},
-  {w:9,q:'"the increase in output that arises from an additional unit of input" is',opts:["marginal product","marginal profit","marginal loss","marginal cost"],ans:0},
-  {w:9,q:"A monopolist firm's profit is given by",opts:["(Price - ATC) × Q","(Price - Q) × ATC","(ATC - Q) × Price","Price × Q - ATC"],ans:0},
-  {w:9,q:"Which of the following is true for a competitive firm?",opts:["P > MR","P > MC","MR > MC","MR = MC"],ans:3},
-  {w:9,q:'"the relationship between the quantity of inputs used to make a good and the quantity of output of that good" is',opts:["Laffer's curve","Phillips curve","Production function","Output function"],ans:2},
-  {w:9,q:'"total revenue minus total cost, including both explicit and implicit costs" is a definition of',opts:["economic profit","accounting profit","profit","loss"],ans:0},
-  {w:9,q:"When the cost of production for a single firm is much lesser than the cost of production for competitive firms, we have a/an",opts:["natural monopoly","artificial monopoly","oligopoly","duopoly"],ans:0},
-  {w:9,q:"Which of the following is true for a monopoly?",opts:["P > MR","MR > MC","MC > P","MC > MR"],ans:0},
-  {w:9,q:'"costs that do not vary with the quantity of output produced" are',opts:["fixed costs","variable costs","marginal costs","sunk costs"],ans:0},
-  {w:9,q:'"total revenue minus total explicit cost" is a definition of',opts:["economic profit","accounting profit","profit","loss"],ans:1},
-  // Week 10
-  {w:10,q:'The political philosophy where the government chooses policies deemed just, evaluated by an impartial observer behind a "veil of ignorance" is',opts:["Utilitarianism","Liberalism","Libertarianism","Socialism"],ans:1},
-  {w:10,q:'"a condition characterised by severe deprivation of basic human needs" is known as',opts:["absolute poverty","relative poverty","median poverty","poverty line"],ans:0},
-  {w:10,q:'"an absolute level of income set by the government for each family size below which a family is deemed to be in poverty" is known as',opts:["deprivation line","poverty line","deprivation index","poverty index"],ans:1},
-  {w:10,q:'"above-equilibrium wages paid by firms to increase worker productivity" are known as',opts:["compensating wage","efficiency wage","productivity wage","retention wage"],ans:1},
-  {w:10,q:'"a difference in wages that arises to offset the non-monetary characteristics of different jobs" is known as',opts:["differentiating differential","compensating differential","differentiating integral","compensating integral"],ans:1},
-  {w:10,q:"Absolute poverty depends",opts:["on income but not on access to social services","not on income but on access to social services","on income and on access to social services","neither on income nor on access to social services"],ans:2},
-  {w:10,q:'"a condition where a household\'s income is lower than the median income in the particular country" is known as',opts:["absolute poverty","relative poverty","median poverty","poverty line"],ans:1},
-  {w:10,q:'"the equipment and structures used to produce goods and services" is the definition of',opts:["tools","machinery","capital","factors of production"],ans:2},
-  {w:10,q:"For a competitive and profit-maximising firm,",opts:["each factor's rental price < the value of the marginal product for that factor","each factor's rental price = the value of the marginal product for that factor","each factor's rental price > the value of the marginal product for that factor","each factor's rental price = the value of the average product for that factor"],ans:1},
-  {w:10,q:'"the political philosophy according to which the government should punish crimes and enforce voluntary agreements but not redistribute income" is',opts:["Utilitarianism","Liberalism","Libertarianism","Socialism"],ans:2},
-  // Week 11
-  {w:11,q:'"a situation where a buyer is at a risk of being sold goods of low quality" is an example of',opts:["adverse selection","moral hazard","symmetric information","none of these"],ans:0},
-  {w:11,q:'"the change in consumption that results when a price change moves the consumer to a higher or lower indifference curve" is known as',opts:["income effect","substitution effect","indifference effect","budget effect"],ans:0},
-  {w:11,q:"Which of these is not a property of indifference curves?",opts:["Higher indifference curves are preferred to lower ones","Indifference curves are downward-sloping","Indifference curves cross at right angles","Indifference curves are bowed inwards"],ans:2},
-  {w:11,q:'"an action taken by an informed party to reveal private information to an uninformed party" is known as',opts:["signalling","screening","informing","heuristics"],ans:0},
-  {w:11,q:'"the part of actual resources that can be developed profitably in the future" are',opts:["potential resources","actual resources","reserve resources","stock resources"],ans:2},
-  {w:11,q:'"a curve that shows consumption bundles that give the consumer the same level of satisfaction" is known as',opts:["consumption curve","satisfaction curve","indifference curve","budget curve"],ans:2},
-  {w:11,q:'"the rate at which a consumer is willing to trade one good for another" is known as',opts:["marginal rate of substitution","marginal rate of exchange","marginal rate of trade","marginal rate of transfer"],ans:0},
-  {w:11,q:'"Ram is not wearing clothes properly, so Ram must also be lazy." This is an example of',opts:["confirmation bias","halo effect","horn effect","priming"],ans:2},
-  {w:11,q:'"mental short cut justifying increased investment in a decision because prior investment was made" is',opts:["affect heuristic","availability heuristic","effort heuristic","escalation of commitment"],ans:3},
-  {w:11,q:'"those resources that may be used in the future" are',opts:["potential resources","actual resources","reserve resources","stock resources"],ans:0},
-  // Week 12
-  {w:12,q:"Captive breeding is an example of",opts:["in-situ conservation","ex-situ conservation","in-situ preservation","ex-situ preservation"],ans:1},
-  {w:12,q:"Biological control of pest populations is an example of",opts:["provisioning service","regulating service","supporting service","cultural service"],ans:1},
-  {w:12,q:"Zoo is an example of",opts:["in-situ conservation","ex-situ conservation","in-situ preservation","ex-situ preservation"],ans:1},
-  {w:12,q:"The elephant can be called as (home range, ecosystem regulator, relatable to people)",opts:["umbrella species","keystone species","flagship species","all of the above"],ans:3},
-  {w:12,q:"As per Wildlife Protection Act 1972, wild life includes any animal, aquatic or land vegetation which forms part of any _____",opts:["ecosystem","state","country","habitat"],ans:3},
-  {w:12,q:"The tiger can be called as (home range, trophic cascades, eco-tourism)",opts:["umbrella species","keystone species","flagship species","all of the above"],ans:3},
-  {w:12,q:'"the cost of impacts caused by emission of carbon dioxide" is known as',opts:["cost of carbon","economic cost of carbon","social cost of carbon","cultural cost of carbon"],ans:2},
-  {w:12,q:"Soil formation is an example of",opts:["provisioning service","regulating service","supporting service","cultural service"],ans:2},
-  {w:12,q:"People come to Sessa orchid sanctuary to witness orchids, which would be classified as",opts:["umbrella species","keystone species","flagship species","extinct species"],ans:2},
-  {w:12,q:"Nutrient cycling is an example of",opts:["provisioning service","regulating service","supporting service","cultural service"],ans:2},
-];
-
-const WEEKS = [...new Set(RAW.map(q=>q.w))].sort((a,b)=>a-b);
-const LETTERS = ['A','B','C','D','E'];
-
-// ── State ──
-let mode = '';
-let questions = [];
-let userAnswers = [];
-let currentIdx = 0;
-let timerInterval = null;
-let elapsedInterval = null;
-let remainSecs = 0;
-let elapsedSecs = 0;
-let shuffleQ = false, shuffleOpt = false;
-let optionMaps = []; // for shuffled options mapping
-let studyAnswered = []; // per q whether answered in study mode
-let examQuestions = [];
-let examAnswers = [];
-
-// ── toggles ──
-const toggleState = { shuffleQ: false, shuffleOpt: false };
-function toggleOpt(elId, key) {
-  toggleState[key] = !toggleState[key];
-  const el = document.getElementById(elId);
-  el.classList.toggle('on', toggleState[key]);
-}
-
-// ═══════════════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════════════
-function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function goHome() {
-  clearTimers();
-  goTo('home');
-}
-function confirmQuit(mode) {
-  if(confirm('Quit this session? Your progress will be lost.')) goHome();
-}
-
-// ═══════════════════════════════════════════════
-//  INIT CHIPS
-// ═══════════════════════════════════════════════
-function buildChips(containerId, selectedSet) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = '';
-  // All option
-  const all = document.createElement('div');
-  all.className = 'week-chip' + (selectedSet.has('all') ? ' selected' : '');
-  all.textContent = 'All';
-  all.onclick = () => {
-    if(selectedSet.has('all')) { selectedSet.clear(); }
-    else { selectedSet.clear(); selectedSet.add('all'); WEEKS.forEach(w=>selectedSet.add(w)); }
-    buildChips(containerId, selectedSet);
-  };
-  el.appendChild(all);
-  WEEKS.forEach(w => {
-    const chip = document.createElement('div');
-    chip.className = 'week-chip' + (selectedSet.has(w) ? ' selected' : '');
-    chip.textContent = 'Wk ' + w;
-    chip.onclick = () => {
-      selectedSet.delete('all');
-      if(selectedSet.has(w)) selectedSet.delete(w);
-      else selectedSet.add(w);
-      buildChips(containerId, selectedSet);
-    };
-    el.appendChild(chip);
-  });
-}
-
-const studyWeeks = new Set(['all', ...WEEKS]);
-const quizWeeks = new Set(['all', ...WEEKS]);
-
-// ═══════════════════════════════════════════════
-//  TIMER HELPERS
-// ═══════════════════════════════════════════════
-function clearTimers() {
-  clearInterval(timerInterval);
-  clearInterval(elapsedInterval);
-  timerInterval = null; elapsedInterval = null;
-}
-function fmtTime(s) {
-  const m = Math.floor(s/60);
-  const sec = s%60;
-  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
-}
-function startTimer(secs, pillId, onEnd) {
-  remainSecs = secs;
-  const pill = document.getElementById(pillId);
-  pill.classList.remove('warn');
-  pill.textContent = fmtTime(remainSecs);
-  timerInterval = setInterval(()=>{
-    remainSecs--;
-    pill.textContent = fmtTime(remainSecs);
-    if(remainSecs <= 60) pill.classList.add('warn');
-    if(remainSecs <= 0) { clearInterval(timerInterval); onEnd(); }
-  }, 1000);
-}
-function startElapsed(pillId) {
-  elapsedSecs = 0;
-  const pill = document.getElementById(pillId);
-  elapsedInterval = setInterval(()=>{
-    elapsedSecs++;
-    pill.textContent = fmtTime(elapsedSecs);
-  }, 1000);
-}
-
-// ═══════════════════════════════════════════════
-//  LEARNING MODE
-// ═══════════════════════════════════════════════
-let learnWeek = 1;
-function initLearn() {
-  const tabs = document.getElementById('learnTabs');
-  tabs.innerHTML = '';
-  WEEKS.forEach(w => {
-    const t = document.createElement('div');
-    t.className = 'learn-tab' + (w === learnWeek ? ' active' : '');
-    t.textContent = 'Week ' + w;
-    t.onclick = () => { learnWeek = w; renderLearnWeek(); tabs.querySelectorAll('.learn-tab').forEach((e,i)=>e.classList.toggle('active', WEEKS[i]===w)); };
-    tabs.appendChild(t);
-  });
-  renderLearnWeek();
-}
-function renderLearnWeek() {
-  const qs = RAW.filter(q => q.w === learnWeek);
-  const el = document.getElementById('learnContent');
-  el.innerHTML = '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.4rem;margin-bottom:20px">Week ' + learnWeek + ' — ' + qs.length + ' Questions</h3>';
-  qs.forEach((q,i) => {
-    const card = document.createElement('div');
-    card.className = 'learn-q-block';
-    const optHtml = q.opts.map((o,oi) => `<div class="learn-opt${oi===q.ans?' correct-opt':''}">${LETTERS[oi]}. ${o}${oi===q.ans?' ✓':''}</div>`).join('');
-    card.innerHTML = `<div class="q-week-tag">Q${i+1}</div><div class="learn-q-text">${q.q}</div><div class="learn-opts">${optHtml}</div>`;
-    el.appendChild(card);
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  STUDY MODE
-// ═══════════════════════════════════════════════
-function startStudy() {
-  const weeks = [...studyWeeks].filter(w => w !== 'all');
-  if(!weeks.length) { alert('Select at least one week.'); return; }
-  questions = RAW.filter(q => weeks.includes(q.w));
-  userAnswers = new Array(questions.length).fill(null);
-  studyAnswered = new Array(questions.length).fill(false);
-  currentIdx = 0;
-  clearTimers();
-  startTimer(10*60, 'studyTimer', ()=>alert('Time up! Session ended.'));
-  startElapsed('studyElapsed');
-  renderStudyQ();
-  goTo('study-screen');
-}
-function renderStudyQ() {
-  const q = questions[currentIdx];
-  const total = questions.length;
-  document.getElementById('studyProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
-  document.getElementById('studyQCount').textContent = (currentIdx+1)+' / '+total;
-  document.getElementById('studyPrevBtn').disabled = currentIdx === 0;
-  const nextBtn = document.getElementById('studyNextBtn');
-  nextBtn.textContent = currentIdx === total-1 ? 'Finish' : 'Next →';
-
-  const answered = studyAnswered[currentIdx];
-  const userAns = userAnswers[currentIdx];
-
-  let optHtml = q.opts.map((o,i) => {
-    let cls = '';
-    if(answered) {
-      if(i === q.ans) cls = 'correct';
-      else if(i === userAns) cls = 'wrong';
-    }
-    return `<button class="option-btn ${cls}" onclick="studyAnswer(${i})" ${answered?'disabled':''}><span class="opt-letter">${LETTERS[i]}</span>${o}</button>`;
-  }).join('');
-
-  const feedback = answered
-    ? (userAns === q.ans
-        ? `<div class="study-answer-banner">✓ Correct! The answer is: ${q.opts[q.ans]}</div>`
-        : `<div class="study-answer-banner" style="background:rgba(248,81,73,.08);border-color:var(--warn);color:var(--warn)">✗ Incorrect. Correct answer: ${LETTERS[q.ans]}. ${q.opts[q.ans]}</div>`)
-    : '';
-
-  document.getElementById('studyQCard').innerHTML = `
-    <div class="q-card">
-      <div class="q-week-tag">Week ${q.w} · Q${currentIdx+1}</div>
-      <div class="q-text">${q.q}</div>
-      <div class="options-list">${optHtml}</div>
-      ${feedback}
-    </div>`;
-}
-function studyAnswer(i) {
-  if(studyAnswered[currentIdx]) return;
-  userAnswers[currentIdx] = i;
-  studyAnswered[currentIdx] = true;
-  renderStudyQ();
-}
-function studyNav(d) {
-  const next = currentIdx + d;
-  if(next < 0 || next >= questions.length) { if(d>0) goHome(); return; }
-  currentIdx = next;
-  renderStudyQ();
-}
-
-// ═══════════════════════════════════════════════
-//  QUIZ MODE
-// ═══════════════════════════════════════════════
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-
-function startQuiz() {
-  const weeks = [...quizWeeks].filter(w => w !== 'all');
-  if(!weeks.length) { alert('Select at least one week.'); return; }
-  shuffleQ = toggleState.shuffleQ;
-  shuffleOpt = toggleState.shuffleOpt;
-  const mins = parseInt(document.getElementById('quizTimerInput').value) || 10;
-
-  let pool = RAW.filter(q => weeks.includes(q.w));
-  if(shuffleQ) pool = shuffle(pool);
-
-  // build shuffled option maps
-  optionMaps = pool.map(q => {
-    if(!shuffleOpt) return q.opts.map((_,i)=>i); // identity
-    const indices = [0,1,2,3];
-    const shuffled = shuffle(indices);
-    return shuffled; // shuffled[newPos] = originalIndex
-  });
-
-  questions = pool;
-  userAnswers = new Array(questions.length).fill(null);
-  currentIdx = 0;
-  clearTimers();
-  startTimer(mins*60, 'quizTimer', ()=>{ alert('Time\'s up! Submitting quiz.'); submitQuiz(); });
-  startElapsed('quizElapsed');
-  renderQuizQ();
-  goTo('quiz-screen');
-}
-
-function renderQuizQ() {
-  const q = questions[currentIdx];
-  const map = optionMaps[currentIdx];
-  const total = questions.length;
-  document.getElementById('quizProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
-  document.getElementById('quizQCount').textContent = (currentIdx+1)+' / '+total;
-  document.getElementById('quizNextBtn').textContent = currentIdx===total-1 ? 'Last' : 'Next →';
-
-  const userAns = userAnswers[currentIdx]; // index into NEW option positions
-
-  const optHtml = map.map((origIdx, newPos) => {
-    const selected = userAns === newPos;
-    return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswer(${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
-  }).join('');
-
-  document.getElementById('quizQCard').innerHTML = `
-    <div class="q-card">
-      <div class="q-week-tag">Week ${q.w} · Q${currentIdx+1}</div>
-      <div class="q-text">${q.q}</div>
-      <div class="options-list">${optHtml}</div>
-    </div>`;
-}
-function quizAnswer(i) {
-  userAnswers[currentIdx] = i;
-  renderQuizQ();
-}
-function quizNav(d) {
-  const next = currentIdx + d;
-  if(next < 0 || next >= questions.length) return;
-  currentIdx = next;
-  renderQuizQ();
-}
-
-function submitQuiz() {
-  clearTimers();
-  let correct=0, wrong=0, skipped=0;
-  questions.forEach((q,i) => {
-    const ua = userAnswers[i];
-    if(ua === null) { skipped++; return; }
-    const map = optionMaps[i];
-    const origIdx = map[ua];
-    if(origIdx === q.ans) correct++;
-    else wrong++;
-  });
-  const total = questions.length;
-  document.getElementById('resultScore').textContent = correct+'/'+total;
-  document.getElementById('rCorrect').textContent = correct;
-  document.getElementById('rWrong').textContent = wrong;
-  document.getElementById('rSkipped').textContent = skipped;
-  document.getElementById('rTime').textContent = fmtTime(elapsedSecs);
-  document.getElementById('reviewList').innerHTML = '';
-  goTo('quiz-results');
-}
-
-function showReview() {
-  const list = document.getElementById('reviewList');
-  list.innerHTML = '<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;margin-bottom:16px">Answer Review</div>';
-  questions.forEach((q,i) => {
-    const ua = userAnswers[i];
-    const map = optionMaps[i];
-    const origAns = ua !== null ? map[ua] : null;
-    const isCorrect = origAns === q.ans;
-    const item = document.createElement('div');
-    item.className = 'review-item ' + (ua===null ? '' : isCorrect ? 'correct-item' : 'wrong-item');
-    const optsHtml = map.map((origIdx, newPos) => {
-      let cls = '';
-      if(origIdx === q.ans) cls = 'is-correct';
-      else if(ua === newPos && origIdx !== q.ans) cls = 'is-wrong';
-      const marker = origIdx===q.ans ? '✓' : (ua===newPos ? '✗' : '');
-      return `<div class="review-opt ${cls}">${LETTERS[newPos]}. ${q.opts[origIdx]} ${marker}</div>`;
-    }).join('');
-    item.innerHTML = `<div class="review-q">Q${i+1}. ${q.q}</div><div class="review-opts">${optsHtml}</div>`;
-    list.appendChild(item);
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  EXAM MODE
-// ═══════════════════════════════════════════════
-function startExam() {
-  const mins = parseInt(document.getElementById('examTimerInput').value) || 60;
-  // pick 25 from all Qs for section A, another 25 for section B (no overlap)
-  const pool = shuffle(RAW);
-  const secA = pool.slice(0,25);
-  const secB = pool.slice(25,50);
-  examQuestions = [...secA, ...secB]; // 0-24 = secA, 25-49 = secB
-  examAnswers = new Array(50).fill(null);
-  clearTimers();
-  startTimer(mins*60, 'examTimer', ()=>{ alert('Time\'s up! Submitting exam.'); submitExam(); });
-  startElapsed('examElapsed');
-  renderExamScreen();
-  goTo('exam-screen');
-}
-
-function renderExamScreen() {
-  const el = document.getElementById('examContent');
-  el.innerHTML = '';
-
-  // Section A
-  const hdrA = document.createElement('div');
-  hdrA.className = 'exam-section-header';
-  hdrA.innerHTML = '<span class="exam-section-badge">Section A</span><span style="font-weight:500">Multiple Choice</span><span class="exam-marks-badge">25 Questions · 1 Mark Each</span>';
-  el.appendChild(hdrA);
-
-  examQuestions.slice(0,25).forEach((q,i) => {
-    el.appendChild(buildExamQ(q, i));
-  });
-
-  const sep = document.createElement('div');
-  sep.className = 'separator';
-  el.appendChild(sep);
-
-  // Section B
-  const hdrB = document.createElement('div');
-  hdrB.className = 'exam-section-header';
-  hdrB.innerHTML = '<span class="exam-section-badge" style="background:var(--accent2)">Section B</span><span style="font-weight:500">Multiple Choice</span><span class="exam-marks-badge">25 Questions · 2 Marks Each</span>';
-  el.appendChild(hdrB);
-
-  examQuestions.slice(25).forEach((q,i) => {
-    el.appendChild(buildExamQ(q, 25+i));
-  });
-}
-
-function buildExamQ(q, gi) {
-  const div = document.createElement('div');
-  div.className = 'q-card';
-  div.id = 'examQ_'+gi;
-  div.innerHTML = `
-    <div class="q-week-tag">Q${gi+1} · Week ${q.w}</div>
-    <div class="q-text">${q.q}</div>
-    <div class="options-list">
-      ${q.opts.map((o,oi)=>`<button class="option-btn${examAnswers[gi]===oi?' reveal-correct':''}" onclick="examAnswer(${gi},${oi})">${'<span class="opt-letter">'+LETTERS[oi]+'</span>'}${o}</button>`).join('')}
-    </div>`;
-  return div;
-}
-
-function examAnswer(gi, oi) {
-  examAnswers[gi] = oi;
-  // re-render just that card
-  const q = examQuestions[gi];
-  const card = document.getElementById('examQ_'+gi);
-  card.querySelector('.options-list').innerHTML = q.opts.map((o,oi2)=>`<button class="option-btn${examAnswers[gi]===oi2?' reveal-correct':''}" onclick="examAnswer(${gi},${oi2})">${'<span class="opt-letter">'+LETTERS[oi2]+'</span>'}${o}</button>`).join('');
-}
-
-function submitExam() {
-  clearTimers();
-  let secA=0, secB=0;
-  examQuestions.forEach((q,i) => {
-    const ua = examAnswers[i];
-    if(ua === q.ans) {
-      if(i < 25) secA++;
-      else secB++;
-    }
-  });
-  const total = secA*1 + secB*2;
-  document.getElementById('examResultScore').textContent = total;
-  document.getElementById('eSecA').textContent = secA+'/25';
-  document.getElementById('eSecB').textContent = secB+'/25';
-  document.getElementById('eTime').textContent = fmtTime(elapsedSecs);
-  document.getElementById('examReviewList').innerHTML = '';
-  goTo('exam-results');
-}
-
-function showExamReview() {
-  const list = document.getElementById('examReviewList');
-  list.innerHTML = '<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;margin-bottom:16px">Answer Review</div>';
-  examQuestions.forEach((q,i) => {
-    const ua = examAnswers[i];
-    const isCorrect = ua === q.ans;
-    const marks = i < 25 ? '1 Mark' : '2 Marks';
-    const item = document.createElement('div');
-    item.className = 'review-item ' + (ua===null ? '' : isCorrect ? 'correct-item' : 'wrong-item');
-    const optsHtml = q.opts.map((o,oi) => {
-      let cls = '';
-      if(oi===q.ans) cls='is-correct';
-      else if(ua===oi && oi!==q.ans) cls='is-wrong';
-      const marker = oi===q.ans?'✓':(ua===oi?'✗':'');
-      return `<div class="review-opt ${cls}">${LETTERS[oi]}. ${o} ${marker}</div>`;
-    }).join('');
-    item.innerHTML = `<div style="font-size:.7rem;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace">Q${i+1} · Week ${q.w} · ${marks}</div><div class="review-q">${q.q}</div><div class="review-opts">${optsHtml}</div>`;
-    list.appendChild(item);
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
-buildChips('studyWeekChips', studyWeeks);
-buildChips('quizWeekChips', quizWeeks);
-initLearn();
-</script>
-</body>
-</html>
+  {w:7,q:"Laffer's curve is the relationship between",opts:["inflation and unemployment","tax size and tax revenue
