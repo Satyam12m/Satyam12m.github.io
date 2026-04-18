@@ -76,6 +76,7 @@ body::before {
 .home-title span { color: var(--accent); }
 
 .home-sub {
+  font-size: 1rem;
   color: var(--muted);
   margin-bottom: 48px;
   letter-spacing: 2px;
@@ -206,15 +207,14 @@ body::before {
   padding: 32px;
   margin-bottom: 20px;
   animation: fadeUp .3s ease;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.q-card.review-marked {
+  border-color: var(--accent3);
+  box-shadow: 0 0 12px rgba(240, 136, 62, 0.15);
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 
-.q-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
 .q-week-tag {
   font-size: .72rem;
   text-transform: uppercase;
@@ -222,29 +222,16 @@ body::before {
   color: var(--accent2);
   font-family: 'DM Mono', monospace;
 }
-
-.review-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: .75rem;
+.review-label {
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  color: var(--accent3);
   display: flex;
   align-items: center;
   gap: 6px;
+  font-weight: 500;
+  user-select: none;
 }
-.review-btn:hover { border-color: var(--accent3); color: var(--accent3); }
-.review-btn.active {
-  background: rgba(240, 136, 62, 0.15);
-  border-color: var(--accent3);
-  color: var(--accent3);
-  font-weight: 600;
-}
-
 .q-text {
   font-family: 'Playfair Display', serif;
   font-size: 1.15rem;
@@ -346,7 +333,11 @@ body::before {
 .form-group { margin-bottom: 20px; }
 .form-label { display:block; font-size:.85rem; font-weight:500; margin-bottom:8px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 
-.week-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.week-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .week-chip {
   padding: 6px 14px;
   border-radius: 20px;
@@ -362,7 +353,12 @@ body::before {
 .week-chip.selected { background: var(--accent); border-color: var(--accent); color:#000; font-weight:600; }
 .week-chip:hover:not(.selected) { border-color: var(--accent); color: var(--accent); }
 
-.toggle-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 .toggle {
   width: 44px; height: 24px;
   background: var(--border);
@@ -383,7 +379,12 @@ body::before {
 }
 .toggle.on::after { left:23px; }
 
-.timer-input-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.timer-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
 .num-input {
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -397,39 +398,26 @@ body::before {
 }
 .num-input:focus { outline:none; border-color:var(--accent); }
 
-/* ══════════════ MODALS ══════════════ */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 1000;
-  align-items: center; justify-content: center;
-  backdrop-filter: blur(4px);
-}
-.modal-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 30px;
-  width: 90%; max-width: 420px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  animation: fadeUp .2s ease;
-}
-.modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 16px; }
-.modal-stats {
-  margin-bottom: 24px; line-height: 1.6;
-  background: var(--surface2);
-  padding: 16px; border-radius: 8px;
-  border: 1px solid var(--border);
-}
-.modal-stats-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-.modal-stats-row:last-child { margin-bottom: 0; }
-
 /* ══════════════ RESULTS ══════════════ */
-.result-hero { text-align: center; padding: 48px 20px 32px; }
-.result-score { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--accent); line-height: 1; }
+.result-hero {
+  text-align: center;
+  padding: 48px 20px 32px;
+}
+.result-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+}
 .result-label { color: var(--muted); font-size: .9rem; margin-top: 4px; }
-.result-stats { display: flex; justify-content: center; gap: 32px; margin: 24px 0; flex-wrap: wrap; }
+.result-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
 .result-stat { text-align:center; }
 .result-stat .val { font-family:'DM Mono',monospace; font-size:1.4rem; font-weight:500; }
 .result-stat .lbl { font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
@@ -444,74 +432,119 @@ body::before {
 }
 .review-item.correct-item { border-left: 3px solid var(--accent); }
 .review-item.wrong-item { border-left: 3px solid var(--warn); }
-.review-item.review-flagged { border-right: 3px solid var(--accent3); }
 .review-q { font-family:'Playfair Display',serif; font-size:1rem; margin-bottom:12px; line-height:1.5; }
 .review-opts { display:flex; flex-direction:column; gap:6px; }
-.review-opt { font-size: .85rem; padding: 6px 10px; border-radius: 6px; color: var(--muted); }
+.review-opt {
+  font-size: .85rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: var(--muted);
+}
 .review-opt.is-correct { color: var(--accent); background: rgba(63,185,80,.08); }
 .review-opt.is-wrong { color: var(--warn); background: rgba(248,81,73,.08); }
 
 /* ══════════════ LEARNING MODE ══════════════ */
-.learn-week-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.learn-week-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
 .learn-tab {
-  padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
-  background: var(--surface2); cursor: pointer; font-size: .82rem;
-  font-family: 'DM Mono', monospace; color: var(--muted); transition: all .2s;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  font-size: .82rem;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+  transition: all .2s;
 }
 .learn-tab:hover { border-color: var(--accent2); color: var(--accent2); }
 .learn-tab.active { background: var(--accent2); border-color:var(--accent2); color:#000; font-weight:600; }
 
-.learn-q-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 14px; }
+.learn-q-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 14px;
+}
 .learn-q-text { font-family:'Playfair Display',serif; font-size:1rem; line-height:1.6; margin-bottom:14px; }
 .learn-opts { display:flex; flex-direction:column; gap:6px; }
-.learn-opt { font-size:.88rem; padding:8px 12px; border-radius:7px; color:var(--muted); border: 1px solid transparent; }
+.learn-opt {
+  font-size:.88rem; padding:8px 12px; border-radius:7px;
+  color:var(--muted); border: 1px solid transparent;
+}
 .learn-opt.correct-opt { background:rgba(63,185,80,.1); border-color:var(--accent); color:var(--accent); font-weight:500; }
 
 /* ══════════════ EXAM MODE ══════════════ */
 .exam-section-header {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 .exam-section-badge {
-  background: var(--accent3); color:#000; font-weight:700;
-  padding: 4px 12px; border-radius:20px; font-size:.8rem; font-family:'DM Mono',monospace;
+  background: var(--accent3);
+  color:#000;
+  font-weight:700;
+  padding: 4px 12px;
+  border-radius:20px;
+  font-size:.8rem;
+  font-family:'DM Mono',monospace;
 }
 .exam-marks-badge {
-  background: var(--surface2); border:1px solid var(--border); color:var(--muted);
-  padding:3px 10px; border-radius:20px; font-size:.78rem; font-family:'DM Mono',monospace;
+  background: var(--surface2);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:3px 10px;
+  border-radius:20px;
+  font-size:.78rem;
+  font-family:'DM Mono',monospace;
 }
 
 /* ══════════════ STUDY MODE ANSWER ══════════════ */
 .study-answer-banner {
-  margin-top: 14px; padding: 12px 16px; border-radius: 8px;
-  background: rgba(63,185,80,.08); border: 1px solid var(--accent);
-  font-size: .9rem; color: var(--accent);
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: rgba(63,185,80,.08);
+  border: 1px solid var(--accent);
+  font-size: .9rem;
+  color: var(--accent);
 }
 
-/* ══════════════ UTILITY ══════════════ */
+/* ══════════════ SCROLLBAR ══════════════ */
 ::-webkit-scrollbar { width:6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius:3px; }
+
+/* ══════════════ UTILITY ══════════════ */
 .separator { height:1px; background:var(--border); margin:24px 0; }
 .text-muted { color: var(--muted); }
+.mt-8 { margin-top:8px; }
+.mt-16 { margin-top:16px; }
+.flex-row { display:flex; gap:10px; align-items:center; }
+
+/* ══════════════ ELAPSED ══════════════ */
 .elapsed-pill {
-  font-family:'DM Mono',monospace; font-size:.8rem; color:var(--muted);
-  background:var(--surface2); border:1px solid var(--border); padding:4px 12px; border-radius:20px;
+  font-family:'DM Mono',monospace;
+  font-size:.8rem;
+  color:var(--muted);
+  background:var(--surface2);
+  border:1px solid var(--border);
+  padding:4px 12px;
+  border-radius:20px;
 }
 </style>
 </head>
 <body>
-
-<div id="submitModal" class="modal-overlay">
-  <div class="modal-box">
-    <div class="modal-title">Ready to submit?</div>
-    <div class="modal-stats" id="submitModalStats"></div>
-    <div style="display:flex; justify-content:flex-end; gap:12px;">
-      <button class="btn btn-secondary" onclick="closeSubmitModal()">Continue Reviewing</button>
-      <button class="btn btn-danger" id="confirmSubmitBtn">Yes, Submit</button>
-    </div>
-  </div>
-</div>
 
 <section class="screen active" id="home">
   <div class="home-glow"></div>
@@ -564,6 +597,12 @@ body::before {
       <label class="form-label">Select Week(s)</label>
       <div class="week-chips" id="studyWeekChips"></div>
     </div>
+    <div class="form-group">
+      <div class="toggle-row">
+        <div class="toggle" id="studyScrollModeToggle" onclick="toggleOpt('studyScrollModeToggle','studyScrollMode')"></div>
+        <span>Scroll Mode (Show all questions at once)</span>
+      </div>
+    </div>
     <button class="btn btn-primary" onclick="startStudy()" style="margin-top:8px">Start Studying →</button>
   </div>
 </section>
@@ -610,8 +649,8 @@ body::before {
         <span>Shuffle Options</span>
       </div>
       <div class="toggle-row">
-        <div class="toggle" id="scrollModeToggle" onclick="toggleOpt('scrollModeToggle','scrollMode')"></div>
-        <span>Scroll Mode <span class="text-muted">(Show all questions in a list)</span></span>
+        <div class="toggle" id="quizScrollModeToggle" onclick="toggleOpt('quizScrollModeToggle','quizScrollMode')"></div>
+        <span>Scroll Mode (Show all questions at once)</span>
       </div>
     </div>
     <div class="form-group">
@@ -633,15 +672,15 @@ body::before {
     <span class="timer-pill" id="quizTimer">10:00</span>
   </div>
   <div class="content">
-    <div class="q-progress" id="quizProgressWrap">
+    <div class="q-progress">
       <div class="q-progress-bar"><div class="q-progress-fill" id="quizProgressFill"></div></div>
       <span class="q-count" id="quizQCount"></span>
     </div>
     <div id="quizQCard"></div>
-    <div class="q-nav" id="quizNavWrap">
+    <div class="q-nav">
       <button class="btn btn-secondary" onclick="quizNav(-1)" id="quizPrevBtn">← Prev</button>
       <button class="btn btn-primary" onclick="quizNav(1)" id="quizNextBtn">Next →</button>
-      <button class="btn btn-danger" onclick="promptSubmitQuiz()">Submit</button>
+      <button class="btn btn-danger" onclick="submitQuiz()">Submit</button>
     </div>
   </div>
 </section>
@@ -699,7 +738,7 @@ body::before {
   </div>
   <div class="content" id="examContent"></div>
   <div style="position:sticky;bottom:0;background:var(--bg);padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;z-index:10">
-    <button class="btn btn-danger" onclick="promptSubmitExam()">Submit Exam</button>
+    <button class="btn btn-danger" onclick="submitExam()">Submit Exam</button>
   </div>
 </section>
 
@@ -772,12 +811,12 @@ const RAW = [
   {w:4,q:'"The rate of any biological process is limited by that factor in least amount relative to requirement, so there is a single limiting factor." This is the statement for',opts:["Liebig's law of the minimum","Liebig's law of the maximum","Shelford's law of tolerance","Shelford's law of intolerance"],ans:0},
   {w:4,q:"The movement of individuals away from their place of birth or hatching or seed production into a new habitat or area to survive and reproduce is called",opts:["translocation","migration","dispersal","drifting"],ans:2},
   {w:4,q:"Which of these is a stochastic factor?",opts:["birth rate","death rate","population structure","environmental fluctuation"],ans:3},
-  {w:4,q:"The movement of lions across the Gir landscape is an example of",opts:["diffusion","secular dispersal","jump dispersal","drifting"],ans:1},
+  {w:4,q:"The movement of lions across the Gir landscape is an example of",opts:["diffusion","secular dispersal","jump dispersal","drifting"],ans:0},
   {w:4,q:"The acronym HIPPO does not include",opts:["habitat loss","invasive species","pollination","pollution"],ans:2},
   {w:4,q:"I tried growing vegetables under my teak plantation, but the vegetable plants died out. I should be concerned about",opts:["autophagy","allelophagy","autopathy","allelopathy"],ans:3},
   {w:4,q:"The regular, seasonal movement of animals, often along fixed routes is called",opts:["translocation","migration","dispersal","drifting"],ans:1},
   // Week 5
-  {w:5,q:"Fire protection is",opts:["private good","club good","common resource","public good"],ans:3},
+  {w:5,q:"Fire protection is",opts:["private good","club good","common resource","public good"],ans:1},
   {w:5,q:'"the ability to produce a good using fewer inputs than another producer" is',opts:["comparative advantage","absolute advantage","production advantage","resource advantage"],ans:1},
   {w:5,q:"Which of these is not a method of internalisation of externalities?",opts:["tradable pollution permits","charities to social causes","command-and-control policies","free market"],ans:3},
   {w:5,q:"Public goods are",opts:["excludable, rival in consumption","non-excludable, rival in consumption","excludable, non-rival in consumption","non-excludable, non-rival in consumption"],ans:3},
@@ -810,7 +849,7 @@ const RAW = [
   {w:7,q:'"the price of a good that prevails in the world market for that good" is the definition of',opts:["export price","import price","world price","domestic price"],ans:2},
   {w:7,q:"The area between the demand curve and the price is an indicator of",opts:["consumer surplus","producer surplus","total surplus","deadweight loss"],ans:0},
   // Week 8
-  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC / MD"],ans:2},
+  {w:8,q:"For a positive production externality,",opts:["SMB = PMB","SMB = PMB − MD","SMB = PMB + MB","SMC = PMC − MB"],ans:3},
   {w:8,q:'"The direct benefit to consumers of consuming an additional unit of a good by the consumer" is',opts:["private marginal cost (PMC)","social marginal cost (SMC)","private marginal benefit (PMB)","social marginal benefit (SMB)"],ans:2},
   {w:8,q:"Partying with loud noise is an example of",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
   {w:8,q:"When an individual's consumption reduces the well-being of others who are not compensated, we have",opts:["negative production externality","positive production externality","negative consumption externality","positive consumption externality"],ans:2},
@@ -870,6 +909,7 @@ const WEEKS = [...new Set(RAW.map(q=>q.w))].sort((a,b)=>a-b);
 const LETTERS = ['A','B','C','D','E'];
 
 // ── State ──
+let mode = '';
 let questions = [];
 let userAnswers = [];
 let currentIdx = 0;
@@ -877,18 +917,27 @@ let timerInterval = null;
 let elapsedInterval = null;
 let remainSecs = 0;
 let elapsedSecs = 0;
-let optionMaps = []; 
 
-// ── Feature States ──
+let shuffleQ = false, shuffleOpt = false;
+let quizScrollMode = false, studyScrollMode = false;
+let optionMaps = []; 
 let studyAnswered = []; 
+
+// ── Review states ──
 let studyReview = [];
 let quizReview = [];
-let examQuestions = [];
-let examAnswers = [];
 let examReview = [];
 
+let examQuestions = [];
+let examAnswers = [];
+
 // ── toggles ──
-const toggleState = { shuffleQ: false, shuffleOpt: false, scrollMode: false };
+const toggleState = { 
+    shuffleQ: false, 
+    shuffleOpt: false, 
+    quizScrollMode: false, 
+    studyScrollMode: false 
+};
 function toggleOpt(elId, key) {
   toggleState[key] = !toggleState[key];
   const el = document.getElementById(elId);
@@ -903,11 +952,13 @@ function goTo(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
-function goHome() { clearTimers(); goTo('home'); }
+function goHome() {
+  clearTimers();
+  goTo('home');
+}
 function confirmQuit(mode) {
   if(confirm('Quit this session? Your progress will be lost.')) goHome();
 }
-function closeSubmitModal() { document.getElementById('submitModal').style.display = 'none'; }
 
 // ═══════════════════════════════════════════════
 //  INIT CHIPS
@@ -937,27 +988,42 @@ function buildChips(containerId, selectedSet) {
     el.appendChild(chip);
   });
 }
+
 const studyWeeks = new Set(['all', ...WEEKS]);
 const quizWeeks = new Set(['all', ...WEEKS]);
 
 // ═══════════════════════════════════════════════
-//  TIMERS
+//  TIMER HELPERS
 // ═══════════════════════════════════════════════
-function clearTimers() { clearInterval(timerInterval); clearInterval(elapsedInterval); timerInterval = null; elapsedInterval = null; }
-function fmtTime(s) { return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function clearTimers() {
+  clearInterval(timerInterval);
+  clearInterval(elapsedInterval);
+  timerInterval = null; elapsedInterval = null;
+}
+function fmtTime(s) {
+  const m = Math.floor(s/60);
+  const sec = s%60;
+  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
 function startTimer(secs, pillId, onEnd) {
   remainSecs = secs;
   const pill = document.getElementById(pillId);
-  pill.classList.remove('warn'); pill.textContent = fmtTime(remainSecs);
+  pill.classList.remove('warn');
+  pill.textContent = fmtTime(remainSecs);
   timerInterval = setInterval(()=>{
-    remainSecs--; pill.textContent = fmtTime(remainSecs);
+    remainSecs--;
+    pill.textContent = fmtTime(remainSecs);
     if(remainSecs <= 60) pill.classList.add('warn');
     if(remainSecs <= 0) { clearInterval(timerInterval); onEnd(); }
   }, 1000);
 }
 function startElapsed(pillId) {
-  elapsedSecs = 0; const pill = document.getElementById(pillId);
-  elapsedInterval = setInterval(()=>{ elapsedSecs++; pill.textContent = fmtTime(elapsedSecs); }, 1000);
+  elapsedSecs = 0;
+  const pill = document.getElementById(pillId);
+  elapsedInterval = setInterval(()=>{
+    elapsedSecs++;
+    pill.textContent = fmtTime(elapsedSecs);
+  }, 1000);
 }
 
 // ═══════════════════════════════════════════════
@@ -965,7 +1031,8 @@ function startElapsed(pillId) {
 // ═══════════════════════════════════════════════
 let learnWeek = 1;
 function initLearn() {
-  const tabs = document.getElementById('learnTabs'); tabs.innerHTML = '';
+  const tabs = document.getElementById('learnTabs');
+  tabs.innerHTML = '';
   WEEKS.forEach(w => {
     const t = document.createElement('div');
     t.className = 'learn-tab' + (w === learnWeek ? ' active' : '');
@@ -980,7 +1047,8 @@ function renderLearnWeek() {
   const el = document.getElementById('learnContent');
   el.innerHTML = '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.4rem;margin-bottom:20px">Week ' + learnWeek + ' — ' + qs.length + ' Questions</h3>';
   qs.forEach((q,i) => {
-    const card = document.createElement('div'); card.className = 'learn-q-block';
+    const card = document.createElement('div');
+    card.className = 'learn-q-block';
     const optHtml = q.opts.map((o,oi) => `<div class="learn-opt${oi===q.ans?' correct-opt':''}">${LETTERS[oi]}. ${o}${oi===q.ans?' ✓':''}</div>`).join('');
     card.innerHTML = `<div class="q-week-tag">Q${i+1}</div><div class="learn-q-text">${q.q}</div><div class="learn-opts">${optHtml}</div>`;
     el.appendChild(card);
@@ -993,60 +1061,125 @@ function renderLearnWeek() {
 function startStudy() {
   const weeks = [...studyWeeks].filter(w => w !== 'all');
   if(!weeks.length) { alert('Select at least one week.'); return; }
+  
+  studyScrollMode = toggleState.studyScrollMode;
   questions = RAW.filter(q => weeks.includes(q.w));
   userAnswers = new Array(questions.length).fill(null);
   studyAnswered = new Array(questions.length).fill(false);
   studyReview = new Array(questions.length).fill(false);
+  
   currentIdx = 0;
   clearTimers();
-  startTimer(10*60, 'studyTimer', ()=>alert('Time up! Session ended.')); startElapsed('studyElapsed');
-  renderStudyQ(); goTo('study-screen');
-}
-function toggleStudyReview() {
-  studyReview[currentIdx] = !studyReview[currentIdx];
+  document.getElementById('studyQCard').innerHTML = ''; // reset container
+  startTimer(10*60, 'studyTimer', ()=>alert('Time up! Session ended.'));
+  startElapsed('studyElapsed');
   renderStudyQ();
+  goTo('study-screen');
 }
-function renderStudyQ() {
-  const q = questions[currentIdx]; const total = questions.length;
-  document.getElementById('studyProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
-  document.getElementById('studyQCount').textContent = (currentIdx+1)+' / '+total;
-  document.getElementById('studyPrevBtn').disabled = currentIdx === 0;
-  document.getElementById('studyNextBtn').textContent = currentIdx === total-1 ? 'Finish' : 'Next →';
 
-  const answered = studyAnswered[currentIdx];
-  const userAns = userAnswers[currentIdx];
-  const isRev = studyReview[currentIdx];
+function buildStudyQHTML(idx) {
+  const q = questions[idx];
+  const answered = studyAnswered[idx];
+  const userAns = userAnswers[idx];
+  const isReviewed = studyReview[idx];
 
   let optHtml = q.opts.map((o,i) => {
     let cls = '';
-    if(answered) { if(i === q.ans) cls = 'correct'; else if(i === userAns) cls = 'wrong'; }
-    return `<button class="option-btn ${cls}" onclick="studyAnswer(${i})" ${answered?'disabled':''}><span class="opt-letter">${LETTERS[i]}</span>${o}</button>`;
+    if(answered) {
+      if(i === q.ans) cls = 'correct';
+      else if(i === userAns) cls = 'wrong';
+    }
+    return `<button class="option-btn ${cls}" onclick="studyAnswer(${idx}, ${i})" ${answered?'disabled':''}><span class="opt-letter">${LETTERS[i]}</span>${o}</button>`;
   }).join('');
 
   const feedback = answered
-    ? (userAns === q.ans ? `<div class="study-answer-banner">✓ Correct! The answer is: ${q.opts[q.ans]}</div>` : `<div class="study-answer-banner" style="background:rgba(248,81,73,.08);border-color:var(--warn);color:var(--warn)">✗ Incorrect. Correct answer: ${LETTERS[q.ans]}. ${q.opts[q.ans]}</div>`)
+    ? (userAns === q.ans
+        ? `<div class="study-answer-banner">✓ Correct! The answer is: ${q.opts[q.ans]}</div>`
+        : `<div class="study-answer-banner" style="background:rgba(248,81,73,.08);border-color:var(--warn);color:var(--warn)">✗ Incorrect. Correct answer: ${LETTERS[q.ans]}. ${q.opts[q.ans]}</div>`)
     : '';
 
-  document.getElementById('studyQCard').innerHTML = `
-    <div class="q-card">
-      <div class="q-header-row">
-        <div class="q-week-tag">Week ${q.w} · Q${currentIdx+1}</div>
-        <button class="review-btn ${isRev?'active':''}" onclick="toggleStudyReview()">⚑ Mark for Review</button>
+  return `
+    <div class="q-card ${isReviewed ? 'review-marked' : ''}" id="studyQ_${idx}">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div class="q-week-tag" style="margin:0;">Week ${q.w} · Q${idx+1}</div>
+        <label class="review-label">
+          <input type="checkbox" ${isReviewed ? 'checked' : ''} onchange="toggleStudyReview(${idx})"> Mark for Review
+        </label>
       </div>
       <div class="q-text">${q.q}</div>
-      <div class="options-list">${optHtml}</div>
-      ${feedback}
+      <div class="options-list" id="studyOpts_${idx}">${optHtml}</div>
+      <div id="studyFeedback_${idx}">${feedback}</div>
     </div>`;
 }
-function studyAnswer(i) {
-  if(studyAnswered[currentIdx]) return;
-  userAnswers[currentIdx] = i; studyAnswered[currentIdx] = true;
-  renderStudyQ();
+
+function renderStudyQ() {
+  const total = questions.length;
+  
+  if (studyScrollMode) {
+      document.getElementById('studyProgressFill').style.width = '100%';
+      document.getElementById('studyQCount').textContent = total+' / '+total;
+      document.getElementById('studyPrevBtn').style.display = 'none';
+      document.getElementById('studyNextBtn').style.display = 'none';
+
+      // Render only if empty to avoid losing scroll position
+      if(document.getElementById('studyQCard').children.length !== total) {
+           let html = '';
+           for(let i=0; i<total; i++) { html += buildStudyQHTML(i); }
+           document.getElementById('studyQCard').innerHTML = html;
+      }
+  } else {
+      document.getElementById('studyPrevBtn').style.display = 'inline-block';
+      document.getElementById('studyNextBtn').style.display = 'inline-block';
+      document.getElementById('studyProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
+      document.getElementById('studyQCount').textContent = (currentIdx+1)+' / '+total;
+      document.getElementById('studyPrevBtn').disabled = currentIdx === 0;
+      const nextBtn = document.getElementById('studyNextBtn');
+      nextBtn.textContent = currentIdx === total-1 ? 'Finish' : 'Next →';
+
+      document.getElementById('studyQCard').innerHTML = buildStudyQHTML(currentIdx);
+  }
 }
+
+function studyAnswer(idx, optIdx) {
+  if(studyAnswered[idx]) return;
+  userAnswers[idx] = optIdx;
+  studyAnswered[idx] = true;
+  
+  if (studyScrollMode) {
+      // Re-render ONLY the specific question's options and feedback
+      const q = questions[idx];
+      let optHtml = q.opts.map((o,i) => {
+        let cls = '';
+        if(i === q.ans) cls = 'correct';
+        else if(i === optIdx) cls = 'wrong';
+        return `<button class="option-btn ${cls}" disabled><span class="opt-letter">${LETTERS[i]}</span>${o}</button>`;
+      }).join('');
+      
+      const feedback = (optIdx === q.ans)
+            ? `<div class="study-answer-banner">✓ Correct! The answer is: ${q.opts[q.ans]}</div>`
+            : `<div class="study-answer-banner" style="background:rgba(248,81,73,.08);border-color:var(--warn);color:var(--warn)">✗ Incorrect. Correct answer: ${LETTERS[q.ans]}. ${q.opts[q.ans]}</div>`;
+            
+      document.getElementById('studyOpts_'+idx).innerHTML = optHtml;
+      document.getElementById('studyFeedback_'+idx).innerHTML = feedback;
+  } else {
+      renderStudyQ();
+  }
+}
+
 function studyNav(d) {
   const next = currentIdx + d;
   if(next < 0 || next >= questions.length) { if(d>0) goHome(); return; }
-  currentIdx = next; renderStudyQ();
+  currentIdx = next;
+  renderStudyQ();
+}
+
+function toggleStudyReview(idx) {
+  studyReview[idx] = !studyReview[idx];
+  const card = document.getElementById('studyQ_'+idx);
+  if(card) {
+      if(studyReview[idx]) card.classList.add('review-marked');
+      else card.classList.remove('review-marked');
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -1058,139 +1191,142 @@ function startQuiz() {
   const weeks = [...quizWeeks].filter(w => w !== 'all');
   if(!weeks.length) { alert('Select at least one week.'); return; }
   
+  shuffleQ = toggleState.shuffleQ;
+  shuffleOpt = toggleState.shuffleOpt;
+  quizScrollMode = toggleState.quizScrollMode;
+  
+  const mins = parseInt(document.getElementById('quizTimerInput').value) || 10;
+
   let pool = RAW.filter(q => weeks.includes(q.w));
-  if(toggleState.shuffleQ) pool = shuffle(pool);
+  if(shuffleQ) pool = shuffle(pool);
 
   optionMaps = pool.map(q => {
-    if(!toggleState.shuffleOpt) return q.opts.map((_,i)=>i);
-    return shuffle([0,1,2,3]);
+    if(!shuffleOpt) return q.opts.map((_,i)=>i);
+    const indices = [0,1,2,3];
+    return shuffle(indices);
   });
 
   questions = pool;
   userAnswers = new Array(questions.length).fill(null);
   quizReview = new Array(questions.length).fill(false);
   currentIdx = 0;
+  
   clearTimers();
-  startTimer((parseInt(document.getElementById('quizTimerInput').value) || 10)*60, 'quizTimer', ()=>{ alert("Time's up!"); submitQuiz(); });
+  document.getElementById('quizQCard').innerHTML = ''; // reset container
+  startTimer(mins*60, 'quizTimer', ()=>{ alert('Time\'s up! Submitting quiz.'); submitQuiz(true); });
   startElapsed('quizElapsed');
-  renderQuizQ(); goTo('quiz-screen');
+  renderQuizQ();
+  goTo('quiz-screen');
 }
 
-function toggleQuizReview(idx) {
-  quizReview[idx] = !quizReview[idx];
-  if (toggleState.scrollMode) {
-    document.getElementById('quizRevBtn_'+idx).classList.toggle('active', quizReview[idx]);
-  } else {
-    renderQuizQ();
-  }
+function buildQuizQHTML(idx) {
+  const q = questions[idx];
+  const map = optionMaps[idx];
+  const userAns = userAnswers[idx];
+  const isReviewed = quizReview[idx];
+
+  const optHtml = map.map((origIdx, newPos) => {
+      const selected = userAns === newPos;
+      return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswer(${idx}, ${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
+  }).join('');
+
+  return `
+  <div class="q-card ${isReviewed ? 'review-marked' : ''}" id="quizQ_${idx}">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div class="q-week-tag" style="margin:0;">Week ${q.w} · Q${idx+1}</div>
+      <label class="review-label">
+        <input type="checkbox" ${isReviewed ? 'checked' : ''} onchange="toggleQuizReview(${idx})"> Mark for Review
+      </label>
+    </div>
+    <div class="q-text">${q.q}</div>
+    <div class="options-list" id="quizOpts_${idx}">${optHtml}</div>
+  </div>`;
 }
 
 function renderQuizQ() {
   const total = questions.length;
+  if (quizScrollMode) {
+      document.getElementById('quizProgressFill').style.width = '100%';
+      document.getElementById('quizQCount').textContent = total+' / '+total;
+      document.getElementById('quizPrevBtn').style.display = 'none';
+      document.getElementById('quizNextBtn').style.display = 'none';
 
-  if (toggleState.scrollMode) {
-    document.getElementById('quizProgressWrap').style.display = 'none';
-    document.getElementById('quizNavWrap').style.display = 'none';
-    
-    let html = '';
-    questions.forEach((q, gi) => {
-      const map = optionMaps[gi];
-      const userAns = userAnswers[gi];
-      const isRev = quizReview[gi];
-      let optHtml = map.map((origIdx, newPos) => {
-        const selected = userAns === newPos;
-        return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswerScroll(${gi}, ${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
-      }).join('');
-      
-      html += `
-      <div class="q-card" id="quizCard_${gi}">
-        <div class="q-header-row">
-          <div class="q-week-tag">Week ${q.w} · Q${gi+1}</div>
-          <button id="quizRevBtn_${gi}" class="review-btn ${isRev?'active':''}" onclick="toggleQuizReview(${gi})">⚑ Mark for Review</button>
-        </div>
-        <div class="q-text">${q.q}</div>
-        <div class="options-list">${optHtml}</div>
-      </div>`;
-    });
-    
-    html += `
-      <div style="display:flex;justify-content:flex-end;margin-top:20px;margin-bottom:20px;">
-        <button class="btn btn-danger" onclick="promptSubmitQuiz()">Submit Quiz</button>
-      </div>`;
-    document.getElementById('quizQCard').innerHTML = html;
-
+      // Render only if empty to avoid losing scroll position
+      if(document.getElementById('quizQCard').children.length !== total) {
+           let html = '';
+           for(let i=0; i<total; i++) { html += buildQuizQHTML(i); }
+           document.getElementById('quizQCard').innerHTML = html;
+      }
   } else {
-    document.getElementById('quizProgressWrap').style.display = 'flex';
-    document.getElementById('quizNavWrap').style.display = 'flex';
-    document.getElementById('quizProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
-    document.getElementById('quizQCount').textContent = (currentIdx+1)+' / '+total;
-    document.getElementById('quizPrevBtn').disabled = currentIdx === 0;
-    document.getElementById('quizNextBtn').textContent = currentIdx === total-1 ? 'Last' : 'Next →';
+      document.getElementById('quizPrevBtn').style.display = 'inline-block';
+      document.getElementById('quizNextBtn').style.display = 'inline-block';
+      document.getElementById('quizPrevBtn').disabled = currentIdx === 0;
+      document.getElementById('quizNextBtn').textContent = currentIdx === total-1 ? 'Last' : 'Next →';
+      document.getElementById('quizProgressFill').style.width = ((currentIdx+1)/total*100)+'%';
+      document.getElementById('quizQCount').textContent = (currentIdx+1)+' / '+total;
 
-    const q = questions[currentIdx];
-    const map = optionMaps[currentIdx];
-    const userAns = userAnswers[currentIdx]; 
-    const isRev = quizReview[currentIdx];
-
-    const optHtml = map.map((origIdx, newPos) => {
-      const selected = userAns === newPos;
-      return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswer(${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
-    }).join('');
-
-    document.getElementById('quizQCard').innerHTML = `
-      <div class="q-card">
-        <div class="q-header-row">
-          <div class="q-week-tag">Week ${q.w} · Q${currentIdx+1}</div>
-          <button class="review-btn ${isRev?'active':''}" onclick="toggleQuizReview(${currentIdx})">⚑ Mark for Review</button>
-        </div>
-        <div class="q-text">${q.q}</div>
-        <div class="options-list">${optHtml}</div>
-      </div>`;
+      document.getElementById('quizQCard').innerHTML = buildQuizQHTML(currentIdx);
   }
 }
 
-function quizAnswer(i) { userAnswers[currentIdx] = i; renderQuizQ(); }
+function quizAnswer(idx, newPos) {
+  userAnswers[idx] = newPos;
+  if (quizScrollMode) {
+      // update inner options html for that card to keep user from losing place
+      const q = questions[idx];
+      const map = optionMaps[idx];
+      const optHtml = map.map((origIdx, nPos) => {
+          const selected = userAnswers[idx] === nPos;
+          return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswer(${idx}, ${nPos})"><span class="opt-letter">${LETTERS[nPos]}</span>${q.opts[origIdx]}</button>`;
+      }).join('');
+      document.getElementById('quizOpts_'+idx).innerHTML = optHtml;
+  } else {
+      renderQuizQ();
+  }
+}
+
 function quizNav(d) {
   const next = currentIdx + d;
   if(next < 0 || next >= questions.length) return;
-  currentIdx = next; renderQuizQ();
-}
-function quizAnswerScroll(gi, oi) {
-  userAnswers[gi] = oi;
-  const map = optionMaps[gi];
-  const q = questions[gi];
-  const optContainer = document.querySelector(`#quizCard_${gi} .options-list`);
-  optContainer.innerHTML = map.map((origIdx, newPos) => {
-    const selected = userAnswers[gi] === newPos;
-    return `<button class="option-btn${selected?' reveal-correct':''}" onclick="quizAnswerScroll(${gi}, ${newPos})"><span class="opt-letter">${LETTERS[newPos]}</span>${q.opts[origIdx]}</button>`;
-  }).join('');
+  currentIdx = next;
+  renderQuizQ();
 }
 
-function promptSubmitQuiz() {
-  const attempted = userAnswers.filter(a => a !== null).length;
-  const reviewed = quizReview.filter(r => r).length;
-  document.getElementById('submitModalStats').innerHTML = `
-    <div class="modal-stats-row"><span>Total Questions:</span> <strong>${questions.length}</strong></div>
-    <div class="modal-stats-row"><span>Attempted:</span> <strong>${attempted}</strong></div>
-    <div class="modal-stats-row" style="color:var(--accent3);"><span>Marked for Review:</span> <strong>${reviewed}</strong></div>
-  `;
-  document.getElementById('confirmSubmitBtn').onclick = () => { closeSubmitModal(); submitQuiz(); };
-  document.getElementById('submitModal').style.display = 'flex';
+function toggleQuizReview(idx) {
+  quizReview[idx] = !quizReview[idx];
+  const card = document.getElementById('quizQ_'+idx);
+  if(card) {
+      if(quizReview[idx]) card.classList.add('review-marked');
+      else card.classList.remove('review-marked');
+  }
 }
 
-function submitQuiz() {
+function submitQuiz(auto = false) {
+  if (!auto) {
+      const attempted = userAnswers.filter(a => a !== null).length;
+      const reviewed = quizReview.filter(r => r).length;
+      const total = questions.length;
+      if (!confirm(`Quiz Submission Summary:\n\nAttempted: ${attempted} out of ${total}\nMarked for Review: ${reviewed}\n\nAre you sure you want to submit?`)) {
+          return;
+      }
+  }
   clearTimers();
   let correct=0, wrong=0, skipped=0;
   questions.forEach((q,i) => {
     const ua = userAnswers[i];
     if(ua === null) { skipped++; return; }
-    if(optionMaps[i][ua] === q.ans) correct++; else wrong++;
+    const map = optionMaps[i];
+    const origIdx = map[ua];
+    if(origIdx === q.ans) correct++;
+    else wrong++;
   });
-  document.getElementById('resultScore').textContent = correct+'/'+questions.length;
+  const total = questions.length;
+  document.getElementById('resultScore').textContent = correct+'/'+total;
   document.getElementById('rCorrect').textContent = correct;
   document.getElementById('rWrong').textContent = wrong;
   document.getElementById('rSkipped').textContent = skipped;
   document.getElementById('rTime').textContent = fmtTime(elapsedSecs);
+  document.getElementById('reviewList').innerHTML = '';
   goTo('quiz-results');
 }
 
@@ -1204,17 +1340,14 @@ function showReview() {
     const isCorrect = origAns === q.ans;
     const item = document.createElement('div');
     item.className = 'review-item ' + (ua===null ? '' : isCorrect ? 'correct-item' : 'wrong-item');
-    if(quizReview[i]) item.classList.add('review-flagged');
-
     const optsHtml = map.map((origIdx, newPos) => {
       let cls = '';
       if(origIdx === q.ans) cls = 'is-correct';
       else if(ua === newPos && origIdx !== q.ans) cls = 'is-wrong';
-      return `<div class="review-opt ${cls}">${LETTERS[newPos]}. ${q.opts[origIdx]} ${origIdx===q.ans?'✓':(ua===newPos?'✗':'')}</div>`;
+      const marker = origIdx===q.ans ? '✓' : (ua===newPos ? '✗' : '');
+      return `<div class="review-opt ${cls}">${LETTERS[newPos]}. ${q.opts[origIdx]} ${marker}</div>`;
     }).join('');
-    
-    let headExtras = quizReview[i] ? `<span style="color:var(--accent3);font-size:.8rem;font-weight:bold;">⚑ Reviewed</span>` : '';
-    item.innerHTML = `<div style="display:flex;justify-content:space-between;"><div class="review-q">Q${i+1}. ${q.q}</div>${headExtras}</div><div class="review-opts">${optsHtml}</div>`;
+    item.innerHTML = `<div class="review-q">Q${i+1}. ${q.q}</div><div class="review-opts">${optsHtml}</div>`;
     list.appendChild(item);
   });
 }
@@ -1223,79 +1356,107 @@ function showReview() {
 //  EXAM MODE
 // ═══════════════════════════════════════════════
 function startExam() {
+  const mins = parseInt(document.getElementById('examTimerInput').value) || 60;
   const pool = shuffle(RAW);
-  examQuestions = [...pool.slice(0,25), ...pool.slice(25,50)]; 
+  const secA = pool.slice(0,25);
+  const secB = pool.slice(25,50);
+  examQuestions = [...secA, ...secB]; 
   examAnswers = new Array(50).fill(null);
   examReview = new Array(50).fill(false);
+  
   clearTimers();
-  startTimer((parseInt(document.getElementById('examTimerInput').value)||60)*60, 'examTimer', ()=>{ alert("Time's up!"); submitExam(); });
+  startTimer(mins*60, 'examTimer', ()=>{ alert('Time\'s up! Submitting exam.'); submitExam(true); });
   startElapsed('examElapsed');
-  renderExamScreen(); goTo('exam-screen');
-}
-
-function toggleExamReview(gi) {
-  examReview[gi] = !examReview[gi];
-  document.getElementById(`examRevBtn_${gi}`).classList.toggle('active', examReview[gi]);
+  renderExamScreen();
+  goTo('exam-screen');
 }
 
 function renderExamScreen() {
-  const el = document.getElementById('examContent'); el.innerHTML = '';
-  // Section A
-  const hdrA = document.createElement('div'); hdrA.className = 'exam-section-header';
+  const el = document.getElementById('examContent');
+  el.innerHTML = '';
+
+  const hdrA = document.createElement('div');
+  hdrA.className = 'exam-section-header';
   hdrA.innerHTML = '<span class="exam-section-badge">Section A</span><span style="font-weight:500">Multiple Choice</span><span class="exam-marks-badge">25 Questions · 1 Mark Each</span>';
   el.appendChild(hdrA);
-  examQuestions.slice(0,25).forEach((q,i) => el.appendChild(buildExamQ(q, i)));
-  // Separator
-  const sep = document.createElement('div'); sep.className = 'separator'; el.appendChild(sep);
-  // Section B
-  const hdrB = document.createElement('div'); hdrB.className = 'exam-section-header';
+
+  examQuestions.slice(0,25).forEach((q,i) => {
+    el.appendChild(buildExamQ(q, i));
+  });
+
+  const sep = document.createElement('div');
+  sep.className = 'separator';
+  el.appendChild(sep);
+
+  const hdrB = document.createElement('div');
+  hdrB.className = 'exam-section-header';
   hdrB.innerHTML = '<span class="exam-section-badge" style="background:var(--accent2)">Section B</span><span style="font-weight:500">Multiple Choice</span><span class="exam-marks-badge">25 Questions · 2 Marks Each</span>';
   el.appendChild(hdrB);
-  examQuestions.slice(25).forEach((q,i) => el.appendChild(buildExamQ(q, 25+i)));
+
+  examQuestions.slice(25).forEach((q,i) => {
+    el.appendChild(buildExamQ(q, 25+i));
+  });
 }
 
 function buildExamQ(q, gi) {
   const div = document.createElement('div');
-  div.className = 'q-card'; div.id = 'examQ_'+gi;
+  const isReviewed = examReview[gi];
+  div.className = `q-card ${isReviewed ? 'review-marked' : ''}`;
+  div.id = 'examQ_'+gi;
   div.innerHTML = `
-    <div class="q-header-row">
-      <div class="q-week-tag">Q${gi+1} · Week ${q.w}</div>
-      <button id="examRevBtn_${gi}" class="review-btn ${examReview[gi]?'active':''}" onclick="toggleExamReview(${gi})">⚑ Mark for Review</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div class="q-week-tag" style="margin:0;">Q${gi+1} · Week ${q.w}</div>
+        <label class="review-label">
+            <input type="checkbox" ${isReviewed ? 'checked' : ''} onchange="toggleExamReview(${gi})"> Mark for Review
+        </label>
     </div>
     <div class="q-text">${q.q}</div>
     <div class="options-list">
-      ${q.opts.map((o,oi)=>`<button class="option-btn${examAnswers[gi]===oi?' reveal-correct':''}" onclick="examAnswer(${gi},${oi})"><span class="opt-letter">${LETTERS[oi]}</span>${o}</button>`).join('')}
+      ${q.opts.map((o,oi)=>`<button class="option-btn${examAnswers[gi]===oi?' reveal-correct':''}" onclick="examAnswer(${gi},${oi})">${'<span class="opt-letter">'+LETTERS[oi]+'</span>'}${o}</button>`).join('')}
     </div>`;
   return div;
+}
+
+function toggleExamReview(gi) {
+  examReview[gi] = !examReview[gi];
+  const card = document.getElementById('examQ_'+gi);
+  if(card) {
+      if(examReview[gi]) card.classList.add('review-marked');
+      else card.classList.remove('review-marked');
+  }
 }
 
 function examAnswer(gi, oi) {
   examAnswers[gi] = oi;
   const q = examQuestions[gi];
-  document.querySelector(`#examQ_${gi} .options-list`).innerHTML = q.opts.map((o,oi2)=>`<button class="option-btn${examAnswers[gi]===oi2?' reveal-correct':''}" onclick="examAnswer(${gi},${oi2})"><span class="opt-letter">${LETTERS[oi2]}</span>${o}</button>`).join('');
+  const card = document.getElementById('examQ_'+gi);
+  card.querySelector('.options-list').innerHTML = q.opts.map((o,oi2)=>`<button class="option-btn${examAnswers[gi]===oi2?' reveal-correct':''}" onclick="examAnswer(${gi},${oi2})">${'<span class="opt-letter">'+LETTERS[oi2]+'</span>'}${o}</button>`).join('');
 }
 
-function promptSubmitExam() {
-  const attempted = examAnswers.filter(a => a !== null).length;
-  const reviewed = examReview.filter(r => r).length;
-  document.getElementById('submitModalStats').innerHTML = `
-    <div class="modal-stats-row"><span>Total Questions:</span> <strong>50</strong></div>
-    <div class="modal-stats-row"><span>Attempted:</span> <strong>${attempted}</strong></div>
-    <div class="modal-stats-row" style="color:var(--accent3);"><span>Marked for Review:</span> <strong>${reviewed}</strong></div>
-  `;
-  document.getElementById('confirmSubmitBtn').onclick = () => { closeSubmitModal(); submitExam(); };
-  document.getElementById('submitModal').style.display = 'flex';
-}
-
-function submitExam() {
-  clearTimers(); let secA=0, secB=0;
+function submitExam(auto = false) {
+  if (!auto) {
+      const attempted = examAnswers.filter(a => a !== null).length;
+      const reviewed = examReview.filter(r => r).length;
+      const total = examQuestions.length;
+      if (!confirm(`Exam Submission Summary:\n\nAttempted: ${attempted} out of ${total}\nMarked for Review: ${reviewed}\n\nAre you sure you want to submit?`)) {
+          return;
+      }
+  }
+  clearTimers();
+  let secA=0, secB=0;
   examQuestions.forEach((q,i) => {
-    if(examAnswers[i] === q.ans) { if(i < 25) secA++; else secB++; }
+    const ua = examAnswers[i];
+    if(ua === q.ans) {
+      if(i < 25) secA++;
+      else secB++;
+    }
   });
-  document.getElementById('examResultScore').textContent = secA*1 + secB*2;
+  const total = secA*1 + secB*2;
+  document.getElementById('examResultScore').textContent = total;
   document.getElementById('eSecA').textContent = secA+'/25';
   document.getElementById('eSecB').textContent = secB+'/25';
   document.getElementById('eTime').textContent = fmtTime(elapsedSecs);
+  document.getElementById('examReviewList').innerHTML = '';
   goTo('exam-results');
 }
 
@@ -1305,18 +1466,17 @@ function showExamReview() {
   examQuestions.forEach((q,i) => {
     const ua = examAnswers[i];
     const isCorrect = ua === q.ans;
+    const marks = i < 25 ? '1 Mark' : '2 Marks';
     const item = document.createElement('div');
     item.className = 'review-item ' + (ua===null ? '' : isCorrect ? 'correct-item' : 'wrong-item');
-    if(examReview[i]) item.classList.add('review-flagged');
-
     const optsHtml = q.opts.map((o,oi) => {
       let cls = '';
-      if(oi===q.ans) cls='is-correct'; else if(ua===oi && oi!==q.ans) cls='is-wrong';
-      return `<div class="review-opt ${cls}">${LETTERS[oi]}. ${o} ${oi===q.ans?'✓':(ua===oi?'✗':'')}</div>`;
+      if(oi===q.ans) cls='is-correct';
+      else if(ua===oi && oi!==q.ans) cls='is-wrong';
+      const marker = oi===q.ans?'✓':(ua===oi?'✗':'');
+      return `<div class="review-opt ${cls}">${LETTERS[oi]}. ${o} ${marker}</div>`;
     }).join('');
-    
-    let headExtras = examReview[i] ? `<span style="color:var(--accent3);font-size:.8rem;font-weight:bold;">⚑ Reviewed</span>` : '';
-    item.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><div style="font-size:.7rem;color:var(--muted);font-family:'DM Mono',monospace">Q${i+1} · Week ${q.w} · ${i<25?'1 Mark':'2 Marks'}</div>${headExtras}</div><div class="review-q">${q.q}</div><div class="review-opts">${optsHtml}</div>`;
+    item.innerHTML = `<div style="font-size:.7rem;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace">Q${i+1} · Week ${q.w} · ${marks}</div><div class="review-q">${q.q}</div><div class="review-opts">${optsHtml}</div>`;
     list.appendChild(item);
   });
 }
